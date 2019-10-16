@@ -1,13 +1,18 @@
-import React from 'react';
+import React ,{useRef} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
 
   const [value, setValue] = React.useState('');
+  const inputEl =useRef(null);
 
-  const calculate = () => setValue(10);
+  const calculate = (event) => {
+    
+    console.log('hi');
+    setValue(event.target.value);
 
+  } 
   return (
     <div className="form-group">
     <h2>Forex Calculator</h2>
@@ -15,6 +20,10 @@ function App() {
 
     <input type="number" placeholder="risk" onChange={calculate}/>
 
+    
+
+<label>result value:</label>
+{value}
 
 
       {/* <input type="number" ref="principal" placeholder="Loan Amount" value={this.state.value.principal} onChange={this.handleChange}/><br/>

@@ -4,13 +4,20 @@ import './App.css';
 
 function App() {
 
-  const [value, setValue] = React.useState('');
-  const inputEl =useRef(null);
+  const [amountRisk, setAmountRisk] = React.useState(0);
+  const [balance, setBalance] = React.useState(0);
+  // const inputEl =useRef(null);
 
-  const calculate = (event) => {
+  const calculate = (risk) => {
     
     console.log('hi');
-    setValue(event.target.value);
+    setAmountRisk(risk.target.value);
+
+  } 
+
+  const calculateRisk = (riskPercentage) => {
+    
+    setAmountRisk(riskPercentage*0.01*balance);
 
   } 
   return (
@@ -18,12 +25,17 @@ function App() {
     <h2>Forex Calculator</h2>
     <form className="form-group">
 
-    <input type="number" placeholder="risk" onChange={calculate}/>
+
+    <input type="number" placeholder="balance" onChange={calculate}/>
+    <input type="number" placeholder="risk percentage" onChange={calculateRisk}/>
+    <input type="number" placeholder="sl" onChange={calculate}/>
+
+    <input type="number" placeholder="askprice" onChange={calculate}/>
 
     
-
-<label>result value:</label>
-{value}
+<br></br>
+<label>amountRisk:$</label>
+{amountRisk}
 
 
       {/* <input type="number" ref="principal" placeholder="Loan Amount" value={this.state.value.principal} onChange={this.handleChange}/><br/>

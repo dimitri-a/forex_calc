@@ -14,7 +14,7 @@ function App() {
 
   const [sl, setSl] = React.useState(0);
 
-  const [tp, setTp] = React.useState(0);
+  const [tp, setTP] = React.useState(0);
 
   const [entryPrice, setEntryPrice] = React.useState(0);
 
@@ -38,7 +38,7 @@ function App() {
 
   const changeAtr = (atr) => {
 
-    setAtr(Number(atr.target.value))
+    setAtr(Number(atr.target.value)/10000)
 
   }
 
@@ -66,22 +66,29 @@ function App() {
 
 
   const changeEntryPrice = (entry) => {
-    debugger
     setEntryPrice(entry.target.value);
 
 
     //todo JPY  calculation!
 
-    debugger
-    let nr = Number(entryPrice);
-    let b = atr * 1.5 / 10000;
+    let price = Number(entryPrice);
+    let atr_multiplied = atr * 1.5;
 
     if (longPosition) {
-      setSl(nr - b );
+      setSl(price - atr_multiplied);
     }
     else {
-      setSl(nr + b);
+      setSl(price + atr_multiplied);
     }
+
+    //set TP
+    if (longPosition) {
+      setTP(price + atr);
+    }
+    else {
+      setTP(price - atr);
+    }
+
 
   }
 
@@ -124,14 +131,19 @@ function App() {
         {/* <label>position size(lots):{' '}</label> */}
         {/* {standardLots}<br /> */}
 
+
+        <label>SL:</label>
+
+        {sl}
+
+        <br />
+
+
         <label>TP:</label>
 
         {tp}
         <br />
 
-        <label>SL:</label>
-
-        {sl}
 
 
 

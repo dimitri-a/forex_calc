@@ -69,18 +69,18 @@ function App() {
     debugger
     setEntryPrice(entry.target.value);
 
-   
-//todo JPY  calculation!
 
+    //todo JPY  calculation!
 
-let nr = Number(entryPrice);
-let b = atr * 1.5)/10000;
+    debugger
+    let nr = Number(entryPrice);
+    let b = atr * 1.5 / 10000;
 
     if (longPosition) {
-      //setSl(Number(entryPrice) - ( );
+      setSl(nr - b );
     }
     else {
-      //setSl(Number(entryPrice) + (atr * 1.5)/10000);
+      setSl(nr + b);
     }
 
   }
@@ -133,7 +133,7 @@ let b = atr * 1.5)/10000;
 
         {sl}
 
-      
+
 
 
 

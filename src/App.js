@@ -179,7 +179,7 @@ function App() {
 
         {' '}<input type="checkbox" onChange={changeLongPosition} />{' '}{longPosition ? 'BUY' : 'SELL'}
         <br />
-        <input type="number" placeholder="atr in pips" onChange={changeAtr} />
+        <input type="number" placeholder="ATR in pips" onChange={changeAtr} />
         <br/>
 
         {' '}<input type="checkbox" onChange={changeJapaneseRelated} />{' '}{japaneseRelated ? 'JPY enabled' : ''}
@@ -193,7 +193,7 @@ function App() {
 
         {/* <input type="number" placeholder="sl" value={sl} onChange={calculate} /> */}
 
-        <input type="number" placeholder="entryPrice" onChange={changeEntryPrice} />
+        <input type="number" placeholder="Entry price" onChange={changeEntryPrice} />
 
 
         <br/>

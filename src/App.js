@@ -38,7 +38,7 @@ function App() {
 
   const changeAtr = (atr) => {
 
-    setAtr(Number(atr.target.value)/10000)
+    setAtr(Number(atr.target.value) / 10000)
 
   }
 
@@ -65,11 +65,9 @@ function App() {
   }
 
 
-  const changeEntryPrice = (entry) => {
-    setEntryPrice(entry.target.value);
-
-
+  const calculateSL_TP = (e) => {
     //todo JPY  calculation!
+    debugger;
 
     let price = Number(entryPrice);
     let atr_multiplied = atr * 1.5;
@@ -89,6 +87,11 @@ function App() {
       setTP(price - atr);
     }
 
+    e.stopPropagation();
+  }
+
+  const changeEntryPrice = (entry) => {
+    setEntryPrice(entry.target.value);
 
   }
 
@@ -112,6 +115,7 @@ function App() {
 
 
         {' '}<input type="checkbox" placeholder="long/short" onChange={changeLongPosition} />
+        <br />
         {/* <input type="number" placeholder="balance" onChange={calculateBalance} /> */}
         {/* <input type="number" placeholder="risk percentage" onChange={calculateRisk} /> */}
 
@@ -134,18 +138,18 @@ function App() {
 
         <label>SL:</label>
 
-        {sl}
+        <input type="number" value={sl} />
 
         <br />
 
 
         <label>TP:</label>
 
-        {tp}
+        <input type="number" value={tp}></input>
         <br />
 
 
-
+        <input type="button" onClick={calculateSL_TP} value="calculate SL and TP"></input>
 
 
 

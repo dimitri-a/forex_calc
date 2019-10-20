@@ -94,10 +94,12 @@ function App() {
     //atr is pips so convert to decimals:
     let atr_multiplied =  japaneseRelated ? atr*0.01 * 1.5: atr*0.0001*1.5;
 
+    let atr_tp =  japaneseRelated ? atr*0.01: atr*0.0001;
+
     if (longPosition) {
 
       if (japaneseRelated) {
-        setSl((price - atr_multiplied).toFixed(2));
+        setSl((price - atr_multiplied).toFixed(5));
       }
       else {
         setSl((price - atr_multiplied).toFixed(5));
@@ -107,7 +109,7 @@ function App() {
     else {
       //setSl((price + atr_multiplied).toFixed(5));
       if (japaneseRelated) {
-        setSl((price + atr_multiplied).toFixed(2));
+        setSl((price + atr_multiplied).toFixed(5));
       }
       else {
         setSl((price + atr_multiplied).toFixed(5));
@@ -117,19 +119,19 @@ function App() {
     //set TP
     if (longPosition) {
       if (japaneseRelated) {
-        setTP((price + atr_multiplied).toFixed(2));
+        setTP((price + atr_tp).toFixed(5));
       }
       else {
-        setTP((price + atr_multiplied).toFixed(5));
+        setTP((price + atr_tp).toFixed(5));
       }
 
     }
     else {
       if (japaneseRelated) {
-        setTP((price - atr_multiplied).toFixed(2));
+        setTP((price - atr_tp).toFixed(5));
       }
       else {
-        setTP((price - atr_multiplied).toFixed(5));
+        setTP((price - atr_tp).toFixed(5));
       }
     }
 
@@ -195,7 +197,7 @@ function App() {
 
 
         <br/>
-        <input type="button" onClick={calculateSL_TP} value="STEP 2: calculate SL and TP"></input>
+        <input type="button" onClick={calculateSL_TP} value="Calculate SL and TP"></input>
         <br/>
         {/* <label>amountRisk:{' '}$</label>
         {amountRisked}<br /> */}

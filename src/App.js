@@ -9,7 +9,9 @@ function App() {
   const [positionSize, setpositionSize] = React.useState(0);
 
   const [pipsRisk, setPipsRisk] = React.useState(0);
-  const [longPosition, setLongPosition] = React.useState(0);
+  const [longPosition, setLongPosition] = React.useState(false);
+
+  const [japaneseRelated, setJapaneseRelated] = React.useState(false);
 
 
   const [sl, setSl] = React.useState(0);
@@ -37,8 +39,26 @@ function App() {
   }
 
   const changeAtr = (atr) => {
+    debugger;
 
-    setAtr(Number(atr.target.value) / 10000)
+    setAtr(Number(atr.target.value))
+
+
+  }
+
+  const changeJapaneseRelated = (chb) => {
+
+
+
+    if (chb.target.checked) {
+      setJapaneseRelated(true)
+
+    }
+
+    else {
+      setJapaneseRelated(false)
+    }
+
 
   }
 
@@ -65,29 +85,55 @@ function App() {
   }
 
 
-  const calculateSL_TP = (e) => {
+  const calculateSL_TP = () => {
     //todo JPY  calculation!
     debugger;
 
     let price = Number(entryPrice);
-    let atr_multiplied = atr * 1.5;
+
+    //atr is pips so convert to decimals:
+    let atr_multiplied =  japaneseRelated ? atr*0.01 * 1.5: atr*0.0001*1.5;
 
     if (longPosition) {
-      setSl(price - atr_multiplied);
+
+      if (japaneseRelated) {
+        setSl((price - atr_multiplied).toFixed(2));
+      }
+      else {
+        setSl((price - atr_multiplied).toFixed(5));
+      }
+
     }
     else {
-      setSl(price + atr_multiplied);
+      //setSl((price + atr_multiplied).toFixed(5));
+      if (japaneseRelated) {
+        setSl((price + atr_multiplied).toFixed(2));
+      }
+      else {
+        setSl((price + atr_multiplied).toFixed(5));
+      }
     }
 
     //set TP
     if (longPosition) {
-      setTP(price + atr);
+      if (japaneseRelated) {
+        setTP((price + atr_multiplied).toFixed(2));
+      }
+      else {
+        setTP((price + atr_multiplied).toFixed(5));
+      }
+
     }
     else {
-      setTP(price - atr);
+      if (japaneseRelated) {
+        setTP((price - atr_multiplied).toFixed(2));
+      }
+      else {
+        setTP((price - atr_multiplied).toFixed(5));
+      }
     }
 
-    e.stopPropagation();
+    // e.stopPropagation();
   }
 
   const changeEntryPrice = (entry) => {
@@ -95,15 +141,30 @@ function App() {
 
   }
 
+  // const change_atr = (val) =>{
+  //   if (japaneseRelated)
+  //   {
+  //     setAtr(Numbe
+  //   }
+  //   else
+  //   {
+  //     setAtr(atr.target.value)
+  //   }
+
+  // }
+
 
   const changeLongPosition = (chb) => {
 
-    if (chb.target.value) {
+
+    if (chb.target.checked) {
       setLongPosition(true)
     }
     else {
       setLongPosition(false)
     }
+
+
 
   }
 
@@ -114,13 +175,18 @@ function App() {
 
 
 
-        {' '}<input type="checkbox" placeholder="long/short" onChange={changeLongPosition} />
+        {' '}<input type="checkbox" onChange={changeLongPosition} />{' '}{longPosition ? 'BUY' : 'SELL'}
+        <br />
+        <input type="number" placeholder="atr in pips" onChange={changeAtr} />
+        <br/>
+
+        {' '}<input type="checkbox" onChange={changeJapaneseRelated} />{' '}{japaneseRelated ? 'JPY enabled' : ''}
         <br />
         {/* <input type="number" placeholder="balance" onChange={calculateBalance} /> */}
         {/* <input type="number" placeholder="risk percentage" onChange={calculateRisk} /> */}
 
 
-        <input type="number" placeholder="atr" onChange={changeAtr} />
+     
 
 
         {/* <input type="number" placeholder="sl" value={sl} onChange={calculate} /> */}
@@ -128,8 +194,9 @@ function App() {
         <input type="number" placeholder="entryPrice" onChange={changeEntryPrice} />
 
 
-
-        <br></br>
+        <br/>
+        <input type="button" onClick={calculateSL_TP} value="STEP 2: calculate SL and TP"></input>
+        <br/>
         {/* <label>amountRisk:{' '}$</label>
         {amountRisked}<br /> */}
         {/* <label>position size(lots):{' '}</label> */}
@@ -149,7 +216,8 @@ function App() {
         <br />
 
 
-        <input type="button" onClick={calculateSL_TP} value="calculate SL and TP"></input>
+        {/* <input type="button" onClick={change_atr} value="STEP 1 : calculate ATR"></input><br/> */}
+    
 
 
 

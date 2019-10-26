@@ -92,7 +92,8 @@ function App() {
     let price = Number(entryPrice);
 
     //atr is pips so convert to decimals:
-    let atr_multiplied =  japaneseRelated ? atr*0.01 * 1.5: atr*0.0001*1.5;
+    let atr_multiply_factor = 1;
+    let atr_multiplied =  japaneseRelated ? atr*0.01 * atr_multiply_factor: atr*0.0001*atr_multiply_factor;
 
     let atr_tp =  japaneseRelated ? atr*0.01: atr*0.0001;
 

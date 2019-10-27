@@ -95,8 +95,11 @@ function App() {
     let atr_multiply_factor = 1;
     let atr_multiplied =  japaneseRelated ? atr*0.01 * atr_multiply_factor: atr*0.0001*atr_multiply_factor;
 
-    let atr_tp =  japaneseRelated ? atr*0.01: atr*0.0001;
+    let tp_multiply_factor =0.75;
 
+    let atr_tp =  japaneseRelated ? atr*0.01*tp_multiply_factor: atr*0.0001*tp_multiply_factor;
+
+    //SET SL
     if (longPosition) {
 
       if (japaneseRelated) {
@@ -116,6 +119,9 @@ function App() {
         setSl((price + atr_multiplied).toFixed(5));
       }
     }
+
+
+
 
     //set TP
     if (longPosition) {

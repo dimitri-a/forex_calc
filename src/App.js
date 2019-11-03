@@ -6,7 +6,7 @@ function App() {
 
   const [amountRisked, setAmountRisked] = React.useState(0);
   const [balance, setBalance] = React.useState(0);
-  const [positionSize, setpositionSize] = React.useState(0);
+  const [positionSize, setPositionSize] = React.useState(0);
 
   const [pipsRisk, setPipsRisk] = React.useState(0);
   const [longPosition, setLongPosition] = React.useState(false);
@@ -22,6 +22,9 @@ function App() {
   const [standardLots, setStandardLots] = React.useState(0);
 
   const [atr, setAtr] = React.useState(0);
+
+  const [updatedPositionSize,setUpdatedPositionSize] =React.useState(0);
+
 
   const calculate = (risk) => {
 
@@ -49,30 +52,33 @@ function App() {
   }
 
 
-  const calculateRisk = (riskPercentage) => {
-    let tmp = Number(riskPercentage.target.value) * 0.01 * balance;
-    setAmountRisked(tmp);
-  }
 
 
-  const changeStandardLots = () => {
-    let temp = amountRisked / sl;
-    standardLots = temp * 10 //this is a microlot $5000 balance to start
+
+  const changePositionSize = (pos) => {
+    setPositionSize(Number(pos.target.value))
   }
 
 
   const calculateSL_TP = () => {
-    //todo JPY  calculation!
-    debugger;
-
+   
     let price = Number(entryPrice);
 
+  
     //atr is pips so convert to decimals:
-    let sl_multiply_factor = 3;
+    let sl_multiply_factor = 1.5;
     let atr_multiplied = japaneseRelated ? atr * 0.01 * sl_multiply_factor : atr * 0.0001 * sl_multiply_factor;
 
     let tp_multiply_factor = 1;
     let atr_tp = japaneseRelated ? atr * 0.01 * tp_multiply_factor : atr * 0.0001 * tp_multiply_factor;
+
+
+    // let test =(positionSize)/atr;
+    // debugger;
+
+    let baseReferenceAtr = 10;
+    setUpdatedPositionSize((positionSize*baseReferenceAtr/atr).toFixed(5));
+
 
     //SET SL
     if (longPosition) {
@@ -147,6 +153,9 @@ function App() {
 
 
 
+        <input type="number" placeholder="position from calculator" onChange={changePositionSize} />
+        <br />
+
         {' '}<input type="checkbox" onChange={changeJapaneseRelated} />{' '}{japaneseRelated ? 'This pair is JPY related' : 'This not JPY related.'}
         <br />
         {' '}<input type="checkbox" onChange={changeLongPosition} />{' '}{longPosition ? 'BUY' : 'SELL'}
@@ -159,6 +168,12 @@ function App() {
 
         <br />
         <input type="button" onClick={calculateSL_TP} value="Calculate SL and TP"></input>
+        <br />
+
+        
+        <label>Updated positionsize (ATR):</label>
+
+        <input type="number" value={updatedPositionSize}></input>
         <br />
 
 

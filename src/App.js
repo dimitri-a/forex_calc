@@ -73,12 +73,19 @@ function App() {
     let atr_tp = japaneseRelated ? atr * 0.01 * tp_multiply_factor : atr * 0.0001 * tp_multiply_factor;
 
 
-    // let test =(positionSize)/atr;
-    // debugger;
-
+  
     let baseReferenceAtr = 10;
-    setUpdatedPositionSize((positionSize*baseReferenceAtr/atr).toFixed(5));
+    if (atr >= baseReferenceAtr)
+    {
+      setUpdatedPositionSize(((positionSize/2)*baseReferenceAtr/atr).toFixed(5));
 
+    }
+    else
+    {
+      setUpdatedPositionSize((positionSize/2).toFixed(5));
+
+    }
+    
 
     //SET SL
     if (longPosition) {
